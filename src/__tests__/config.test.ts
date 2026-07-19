@@ -8,8 +8,8 @@ vi.mock('../ga-secrets', () => ({
 import { MAX_HISTORY_ENTRIES, MAX_TRANSCRIPT_CHARS, ANTHROPIC_MAX_TOKENS, GA_MEASUREMENT_ID, GA_API_SECRET, FEATURES } from '../config';
 
 describe('config', () => {
-  it('MAX_HISTORY_ENTRIES is 100', () => {
-    expect(MAX_HISTORY_ENTRIES).toBe(100);
+  it('MAX_HISTORY_ENTRIES is 50', () => {
+    expect(MAX_HISTORY_ENTRIES).toBe(50);
   });
 
   it('MAX_TRANSCRIPT_CHARS is 80000', () => {
@@ -28,7 +28,7 @@ describe('config', () => {
     expect(GA_API_SECRET).toBe('test-secret');
   });
 
-  it('FEATURES.exportHistory is false by default', () => {
-    expect(FEATURES.exportHistory).toBe(false);
+  it('FEATURES.exportHistory is true by default', () => {
+    expect(FEATURES.exportHistory).toBe(true);
   });
 });
