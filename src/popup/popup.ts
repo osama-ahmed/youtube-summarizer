@@ -3,8 +3,9 @@ import { fetchTranscript } from '../lib/transcript';
 import { SummarizerError } from '../lib/errors';
 import { extractVideoId } from '../lib/video-id';
 import { LLMProviderId } from '../lib/types';
-import { PROVIDER_DEFAULTS } from '../config';
+import { PROVIDER_DEFAULTS, FEATURES } from '../config';
 import { renderMarkdown, escapeHtml } from '../lib/markdown';
+import { exportHistoryToZip } from '../lib/export';
 
 type View = 'onboarding' | 'idle' | 'summarizing' | 'error' | 'result' | 'history';
 
@@ -165,6 +166,20 @@ async function renderHistory() {
       li.remove();
     });
   });
+
+  const exportBtn = document.getElementById('exportHistoryBtn')!;
+  if (FEATURES.exportHistory) {
+    exportBtn.style.display = 'block';
+    exportBtn.onclick = async () => {
+      exportBtn.textContent = 'Exporting…';
+      (exportBtn as HTMLButtonElement).disabled = true;
+      await exportHistoryToZip();
+      exportBtn.textContent = 'Export All';
+      (exportBtn as HTMLButtonElement).disabled = false;
+    };
+  } else {
+    exportBtn.style.display = 'none';
+  }
 }
 
 function applyTheme(theme: 'light' | 'dark') {
