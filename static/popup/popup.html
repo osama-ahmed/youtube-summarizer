@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Summarizer</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup-container">
+    <header>
+      <h1>YouTube Summarizer</h1>
+    </header>
+
+    <div id="view-onboarding">
+      <p>Welcome! Set up your API key to get started.</p>
+      <button id="openOnboardingBtn" class="btn-primary">Set Up API Key</button>
+    </div>
+
+    <div id="view-idle">
+      <p class="hint">Go to a YouTube video and click the extension again, or use the context menu.</p>
+    </div>
+
+    <div id="view-summarizing">
+      <div class="spinner"></div>
+      <p>Fetching transcript & summarizing…</p>
+    </div>
+
+    <div id="view-error">
+      <p id="errorMessage" class="error-text"></p>
+      <button id="errorActionBtn" class="btn-secondary"></button>
+      <button id="retryBtn" class="btn-primary">Retry</button>
+    </div>
+
+    <div id="view-result">
+      <button id="backHistoryBtn" class="btn-secondary" style="display:none;margin-bottom:8px;">← Back to History</button>
+      <h2 id="videoTitle"></h2>
+      <div id="summaryContent" class="summary-content"></div>
+      <div class="result-actions" style="margin-top:6px;">
+        <button id="copyBtn" class="btn-secondary">Copy</button>
+      </div>
+      <div id="transcriptSection" style="display:none;margin-top:6px;">
+        <h2>Transcript</h2>
+        <div id="transcriptContent" class="transcript-content"></div>
+      </div>
+      <button id="showTranscriptBtn" class="btn-secondary" style="width:100%;margin-top:6px;">Show Transcript</button>
+      <button id="newSummaryBtn" class="btn-primary" style="margin-top:6px;">New Summary</button>
+    </div>
+
+    <div id="view-history">
+      <button id="backFromHistory" class="btn-secondary" style="margin-bottom:8px;">← Back</button>
+      <h2>History</h2>
+      <ul id="historyList"></ul>
+    </div>
+
+    <footer>
+      <button id="themeToggle" class="theme-btn" title="Toggle theme">☀</button>
+      <button id="settingsLink" class="link-btn">Settings</button>
+      <button id="historyLink" class="link-btn">History</button>
+      <a href="mailto:youtubesummarizer74@gmail.com" class="link-btn" title="Feedback">Feedback</a>
+    </footer>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

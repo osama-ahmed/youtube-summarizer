@@ -1,0 +1,29 @@
+{
+  "name": "youtube-summarizer-extension",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "package": "cd dist && zip -r ../youtube-summarizer.zip .",
+    "pretest": "node -e \"require('fs').existsSync('src/ga-secrets.ts') || require('fs').copyFileSync('src/ga-secrets.example.ts', 'src/ga-secrets.ts')\"",
+    "test": "vitest run",
+    "test:e2e": "npm run build && vitest run --config vitest.e2e.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "^0.2.2",
+    "@types/node": "^26.1.1",
+    "esbuild": "^0.28.1",
+    "jsdom": "^29.1.1",
+    "puppeteer": "^25.3.0",
+    "sharp": "^0.35.3",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "youtube-transcript": "^1.3.1"
+  }
+}

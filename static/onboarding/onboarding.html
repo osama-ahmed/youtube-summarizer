@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set Up — YouTube Summarizer</title>
+  <link rel="stylesheet" href="onboarding.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>YouTube Summarizer</h1>
+
+    <div id="stepIndicator" class="step-indicator">Step 1 of 3</div>
+    <h2 id="stepTitle" class="step-title">Pick a Provider</h2>
+
+    <!-- Step 1: Pick Provider -->
+    <div id="step1" class="step">
+      <p class="step-desc">Choose which AI provider to use for summaries.</p>
+      <div class="provider-grid" id="providerGrid">
+        <button class="provider-btn selected" data-provider="gemini">Gemini</button>
+        <button class="provider-btn" data-provider="openai">OpenAI</button>
+        <button class="provider-btn" data-provider="anthropic">Anthropic</button>
+        <button class="provider-btn" data-provider="deepseek">DeepSeek</button>
+        <button class="provider-btn" data-provider="xai">xAI (Grok)</button>
+      </div>
+      <div class="field">
+        <label for="modelSelect">Model</label>
+        <select id="modelSelect"></select>
+      </div>
+    </div>
+
+    <!-- Step 2: Get Your Key -->
+    <div id="step2" class="step" style="display:none">
+      <p class="step-desc" id="step2Desc">To use <strong id="providerName2">Gemini</strong>, you need an API key.</p>
+      <div class="instruction-card">
+        <p>1. Visit <strong id="providerConsoleLabel">Gemini API Console</strong></p>
+        <a id="consoleLink" href="#" target="_blank" class="console-link">Open browser →</a>
+        <p class="instruction-step">2. Create an account or sign in</p>
+        <p class="instruction-step">3. Generate a new API key</p>
+        <p class="instruction-step">4. Copy the key and come back here</p>
+      </div>
+      <p class="key-hint" id="keyHint">Keys look like: <code>AIza...</code></p>
+    </div>
+
+    <!-- Step 3: Paste Key -->
+    <div id="step3" class="step" style="display:none">
+      <p class="step-desc">Paste your <strong id="providerName3">Gemini</strong> API key below.</p>
+      <div class="key-input-row">
+        <input type="password" id="apiKeyInput" placeholder="Paste your API key here" autocomplete="off" />
+        <button id="toggleKeyBtn" class="btn-small" type="button">Show</button>
+      </div>
+      <div id="validationStatus" class="validation-status"></div>
+    </div>
+
+    <!-- Success view -->
+    <div id="stepSuccess" class="step" style="display:none">
+      <div class="success-icon">✓</div>
+      <p class="success-text">Your API key is set up and ready to go!</p>
+      <p class="step-desc">You can now summarize YouTube videos from the extension popup.</p>
+    </div>
+
+    <!-- Buttons -->
+    <div id="actionButtons" class="action-buttons">
+      <button id="continueBtn" class="btn-primary">Continue</button>
+      <button id="skipBtn" class="btn-link">Skip, I'll set up later</button>
+    </div>
+
+    <div id="successButtons" class="action-buttons" style="display:none">
+      <button id="finishBtn" class="btn-primary">Start Summarizing →</button>
+    </div>
+  </div>
+
+  <script type="module" src="onboarding.js"></script>
+</body>
+</html>

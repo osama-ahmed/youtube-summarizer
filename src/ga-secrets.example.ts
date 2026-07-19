@@ -1,0 +1,2 @@
+export const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+export const GA_API_SECRET = 'XXXXXXXXXX';
