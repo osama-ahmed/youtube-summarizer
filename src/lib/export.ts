@@ -4,7 +4,7 @@ import { getHistory } from './storage';
 function slugify(title: string): string {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/[^a-z0-9\u0600-\u06FF]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .replace(/-+/g, '-');
 }

@@ -14,6 +14,7 @@ let lastTitle = '';
 let lastTranscript = '';
 let transcriptAvailable = false;
 let fromHistory = false;
+let isExporting = false;
 
 let homeTitle = '';
 let homeSummary = '';
@@ -171,11 +172,14 @@ async function renderHistory() {
   if (FEATURES.exportHistory) {
     exportBtn.style.display = 'block';
     exportBtn.onclick = async () => {
+      if (isExporting) return;
+      isExporting = true;
       exportBtn.textContent = 'Exporting…';
       (exportBtn as HTMLButtonElement).disabled = true;
       await exportHistoryToZip();
       exportBtn.textContent = 'Export All';
       (exportBtn as HTMLButtonElement).disabled = false;
+      isExporting = false;
     };
   } else {
     exportBtn.style.display = 'none';
