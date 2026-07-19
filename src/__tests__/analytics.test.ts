@@ -1,5 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { sendEvent, sendSummaryEvent } from '../lib/analytics';
+
+vi.mock('../ga-secrets', () => ({
+  GA_MEASUREMENT_ID: 'G-TEST',
+  GA_API_SECRET: 'test-secret',
+}));
+
+import { sendEvent } from '../lib/analytics';
 
 describe('analytics', () => {
   beforeEach(() => {
@@ -25,16 +31,6 @@ describe('analytics', () => {
     (chrome.storage.sync.get as any).mockResolvedValue({ gaEnabled: false });
     await sendEvent('test_event');
     expect(globalThis.fetch).not.toHaveBeenCalled();
-  });
-
-  it('sendSummaryEvent sends summarize event', async () => {
-    await sendSummaryEvent(1000, 'gemini', true);
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.stringContaining('google-analytics.com'),
-      expect.objectContaining({
-        body: expect.stringContaining('summarize'),
-      }),
-    );
   });
 
   it('does not throw on fetch failure', async () => {

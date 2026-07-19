@@ -1,4 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+
+vi.mock('../ga-secrets', () => ({
+  GA_MEASUREMENT_ID: 'G-TEST',
+  GA_API_SECRET: 'test-secret',
+}));
+
 import { MAX_HISTORY_ENTRIES, MAX_TRANSCRIPT_CHARS, ANTHROPIC_MAX_TOKENS, GA_MEASUREMENT_ID, GA_API_SECRET } from '../config';
 
 describe('config', () => {
@@ -14,11 +20,11 @@ describe('config', () => {
     expect(ANTHROPIC_MAX_TOKENS).toBe(4096);
   });
 
-  it('GA_MEASUREMENT_ID is set', () => {
-    expect(GA_MEASUREMENT_ID).toMatch(/^G-/);
+  it('GA_MEASUREMENT_ID is G-TEST', () => {
+    expect(GA_MEASUREMENT_ID).toBe('G-TEST');
   });
 
-  it('GA_API_SECRET is set', () => {
-    expect(GA_API_SECRET).toBeTruthy();
+  it('GA_API_SECRET is test-secret', () => {
+    expect(GA_API_SECRET).toBe('test-secret');
   });
 });

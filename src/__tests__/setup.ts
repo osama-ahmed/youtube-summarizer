@@ -58,6 +58,7 @@ vi.stubGlobal('chrome', {
     onStartup: { addListener: vi.fn() },
     sendMessage: vi.fn(),
     getURL: vi.fn((path: string) => `chrome-extension://id/${path}`),
+    getManifest: vi.fn(() => ({ version: '1.0.0' })),
   },
   tabs: {
     query: vi.fn().mockResolvedValue([]),

@@ -30,10 +30,3 @@ export async function sendEvent(name: string, params: Record<string, string> = {
   } catch {}
 }
 
-export async function sendSummaryEvent(durationMs: number, provider: string, success: boolean): Promise<void> {
-  await sendEvent('summarize', {
-    duration_ms: String(durationMs),
-    provider,
-    success: String(success),
-  });
-}
