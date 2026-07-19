@@ -61,13 +61,6 @@ chrome.runtime.onStartup.addListener(async () => {
 });
 
 chrome.runtime.onMessage.addListener((msg: any, sender, sendResponse) => {
-  if (msg.type === 'CHECK_SUMMARY_LIMIT') {
-    getSummaryCount().then((summaryCount) => {
-      sendResponse({ count: summaryCount });
-    });
-    return true;
-  }
-
   if (msg.type === 'GENERATE_SUMMARY') {
     const { transcript, provider, apiKey, model, videoId, videoTitle } = msg;
 

@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { getSummaryCount } from '../lib/storage';
 import { PROVIDER_DEFAULTS } from '../config';
 
 vi.mock('../lib/llm', () => ({
@@ -77,21 +76,6 @@ describe('service-worker', () => {
       const handler = (chrome.runtime.onStartup.addListener as any).mock.calls[0][0];
       await handler();
       expect((self as any).skipWaiting).toHaveBeenCalled();
-    });
-  });
-
-  describe('CHECK_SUMMARY_LIMIT', () => {
-    it('returns count and pro status', async () => {
-      await chrome.storage.sync.set({ summaryCount: 3 });
-      await import('../service-worker');
-      const handler = (chrome.runtime.onMessage.addListener as any).mock.calls[0][0];
-
-      const sendResponse = vi.fn();
-      const result = handler({ type: 'CHECK_SUMMARY_LIMIT' }, {}, sendResponse);
-      expect(result).toBe(true);
-      await vi.waitUntil(() => sendResponse.mock.calls.length > 0);
-
-      expect(sendResponse).toHaveBeenCalledWith({ count: 3 });
     });
   });
 
