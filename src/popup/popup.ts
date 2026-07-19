@@ -97,6 +97,7 @@ async function startSummary() {
     homeTranscriptAvailable = true;
     showView('result');
   } catch (err: unknown) {
+    console.error('getSummary failed:', err);
     const msg = err instanceof SummarizerError ? err.userMessage : 'Something went wrong. Try again.';
     document.getElementById('errorMessage')!.textContent = msg;
     const actionBtn = document.getElementById('errorActionBtn')!;

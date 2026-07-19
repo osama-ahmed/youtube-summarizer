@@ -52,7 +52,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
   const tabs = await chrome.tabs.query({});
   for (const tab of tabs) {
-    if (tab.id) chrome.tabs.sendMessage(tab.id, { type: 'SW_ACTIVATED' }).catch(() => {});
+    if (tab.id) chrome.tabs.sendMessage(tab.id, { type: 'SW_ACTIVATED' }).catch(() => console.error('sw: failed to notify tab', tab.id));
   }
 });
 
@@ -97,6 +97,7 @@ chrome.runtime.onMessage.addListener((msg: any, sender, sendResponse) => {
 
         sendResponse({ summary, count });
       } catch (err: any) {
+        console.error('GENERATE_SUMMARY failed:', err);
         sendEvent('summarize', {
           provider,
           model,

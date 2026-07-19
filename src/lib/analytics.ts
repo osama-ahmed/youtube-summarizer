@@ -21,12 +21,13 @@ export async function sendEvent(name: string, params: Record<string, string> = {
       `https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`,
       {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           client_id: clientId,
           events: [{ name, params: { ...params, engagement_time_msec: '1' } }],
         }),
       },
     );
-  } catch {}
+  } catch (e) { console.error('analytics:', e); }
 }
 
