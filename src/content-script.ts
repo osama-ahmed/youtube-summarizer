@@ -5,9 +5,9 @@ let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
 function notifyPopup() {
   try {
-    chrome.runtime.sendMessage({ type: 'URL_CHANGED', url: location.href }).catch(() => {});
+    chrome.runtime.sendMessage({ type: 'URL_CHANGED', url: location.href }).catch(() => console.error('cs: failed to notify popup'));
   } catch {
-    // Extension context invalidated
+    console.error('cs: extension context invalidated');
   }
 }
 
@@ -22,8 +22,8 @@ function handleUrlChange() {
 chrome.runtime.onMessage.addListener((msg: any, _sender, sendResponse) => {
   if (msg.type === 'FETCH_TRANSCRIPT') {
     youtubeFetchTranscript(msg.videoId)
-      .then(segments => { try { sendResponse({ segments }); } catch {} })
-      .catch(err => { try { sendResponse({ error: err.message }); } catch {} });
+      .then(segments => { try { sendResponse({ segments }); } catch { console.error('cs: failed to send transcript response'); } })
+      .catch(err => { try { sendResponse({ error: err.message }); } catch { console.error('cs: failed to send error response', err); } });
     return true;
   }
 });

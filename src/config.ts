@@ -1,6 +1,14 @@
-export const MAX_HISTORY_ENTRIES = 100;
+export const MAX_HISTORY_ENTRIES = 50;
 export const MAX_TRANSCRIPT_CHARS = 80000;
 export const ANTHROPIC_MAX_TOKENS = 4096;
+
+export interface FeatureFlags {
+  exportHistory: boolean;
+}
+
+export const FEATURES: FeatureFlags = {
+  exportHistory: true,
+};
 
 export { GA_MEASUREMENT_ID, GA_API_SECRET } from './ga-secrets';
 

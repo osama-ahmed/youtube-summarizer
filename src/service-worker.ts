@@ -52,7 +52,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
   const tabs = await chrome.tabs.query({});
   for (const tab of tabs) {
-    if (tab.id) chrome.tabs.sendMessage(tab.id, { type: 'SW_ACTIVATED' }).catch(() => {});
+    if (tab.id) chrome.tabs.sendMessage(tab.id, { type: 'SW_ACTIVATED' }).catch(() => console.error('sw: failed to notify tab', tab.id));
   }
 });
 
@@ -61,13 +61,6 @@ chrome.runtime.onStartup.addListener(async () => {
 });
 
 chrome.runtime.onMessage.addListener((msg: any, sender, sendResponse) => {
-  if (msg.type === 'CHECK_SUMMARY_LIMIT') {
-    getSummaryCount().then((summaryCount) => {
-      sendResponse({ count: summaryCount });
-    });
-    return true;
-  }
-
   if (msg.type === 'GENERATE_SUMMARY') {
     const { transcript, provider, apiKey, model, videoId, videoTitle } = msg;
 
@@ -97,6 +90,7 @@ chrome.runtime.onMessage.addListener((msg: any, sender, sendResponse) => {
 
         sendResponse({ summary, count });
       } catch (err: any) {
+        console.error('GENERATE_SUMMARY failed:', err);
         sendEvent('summarize', {
           provider,
           model,

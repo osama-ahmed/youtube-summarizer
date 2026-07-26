@@ -14,7 +14,9 @@ async function fetchVideoTitle(videoId: string): Promise<string> {
       const data = await resp.json() as { title?: string };
       return data.title || '';
     }
-  } catch {}
+  } catch (err) {
+    console.error('fetchVideoTitle failed:', err);
+  }
   return '';
 }
 

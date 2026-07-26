@@ -3,8 +3,9 @@ import { fetchTranscript } from '../lib/transcript';
 import { SummarizerError } from '../lib/errors';
 import { extractVideoId } from '../lib/video-id';
 import { LLMProviderId } from '../lib/types';
-import { PROVIDER_DEFAULTS } from '../config';
+import { PROVIDER_DEFAULTS, FEATURES } from '../config';
 import { renderMarkdown, escapeHtml } from '../lib/markdown';
+import { exportHistoryToZip } from '../lib/export';
 
 type View = 'onboarding' | 'idle' | 'summarizing' | 'error' | 'result' | 'history';
 
@@ -13,6 +14,7 @@ let lastTitle = '';
 let lastTranscript = '';
 let transcriptAvailable = false;
 let fromHistory = false;
+let isExporting = false;
 
 let homeTitle = '';
 let homeSummary = '';
@@ -97,6 +99,7 @@ async function startSummary() {
     homeTranscriptAvailable = true;
     showView('result');
   } catch (err: unknown) {
+    console.error('getSummary failed:', err);
     const msg = err instanceof SummarizerError ? err.userMessage : 'Something went wrong. Try again.';
     document.getElementById('errorMessage')!.textContent = msg;
     const actionBtn = document.getElementById('errorActionBtn')!;
@@ -164,6 +167,23 @@ async function renderHistory() {
       li.remove();
     });
   });
+
+  const exportBtn = document.getElementById('exportHistoryBtn')!;
+  if (FEATURES.exportHistory) {
+    exportBtn.style.display = 'block';
+    exportBtn.onclick = async () => {
+      if (isExporting) return;
+      isExporting = true;
+      exportBtn.textContent = 'Exporting…';
+      (exportBtn as HTMLButtonElement).disabled = true;
+      await exportHistoryToZip();
+      exportBtn.textContent = 'Export All';
+      (exportBtn as HTMLButtonElement).disabled = false;
+      isExporting = false;
+    };
+  } else {
+    exportBtn.style.display = 'none';
+  }
 }
 
 function applyTheme(theme: 'light' | 'dark') {
